@@ -11,6 +11,7 @@ const {
   remove,
   hasLabel,
   addLabel,
+  getMomentByUserId,
 } = require("../service/moment.service");
 
 class MomentController {
@@ -89,6 +90,14 @@ class MomentController {
     }
     ctx.response.set("content-type", fileInfo.mimetype);
     ctx.body = fs.createReadStream(`${PICTURE_PATH}/${filename}`);
+  }
+
+  async getUserMoment(ctx, next) {
+    const { userId } = ctx.params;
+
+    const result = await getMomentByUserId(userId);
+
+    ctx.body = result;
   }
 }
 

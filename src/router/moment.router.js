@@ -12,6 +12,7 @@ const {
   remove,
   addLabels,
   fileInfo,
+  getUserMoment,
 } = require("../controller/moment.controller");
 
 const { verifyLabelsExists } = require("../middleware/label.middleware");
@@ -46,5 +47,8 @@ momentRouter.post(
 
 //动态配图的服务
 momentRouter.get("/images/:filename", fileInfo);
+
+//根据用户id查找动态
+momentRouter.get("/userId/:userId", getUserMoment);
 
 module.exports = momentRouter;
