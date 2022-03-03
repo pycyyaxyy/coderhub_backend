@@ -1,5 +1,9 @@
 const Router = require("koa-router");
-const { create, avatarInfo } = require("../controller/user.controller");
+const {
+  create,
+  avatarInfo,
+  getUserInfo,
+} = require("../controller/user.controller");
 const { verifyUser, handlePassword } = require("../middleware/user.middleware");
 
 const userRouter = new Router({
@@ -11,5 +15,8 @@ userRouter.post("/", verifyUser, handlePassword, create);
 
 //获取用户头像接口
 userRouter.get("/:userId/avatar", avatarInfo);
+
+//获取用户信息接口
+userRouter.get("/:userId", getUserInfo);
 
 module.exports = userRouter;

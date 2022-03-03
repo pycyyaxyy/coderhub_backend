@@ -22,6 +22,14 @@ class UserService {
     const [result] = await connection.execute(statement, [avatarUrl, id]);
     return result;
   }
+
+  async getUserById(id) {
+    //通过姓名查找记录
+    const statement = `SELECT * FROM user WHERE id=?;`;
+    const result = await connection.execute(statement, [id]);
+    // console.log(result); //其实是个二维数组 数组的第一个元素是保存结果的（也是数组），第二个元素是保存字段的数组
+    return result[0];
+  }
 }
 
 module.exports = new UserService();

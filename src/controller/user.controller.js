@@ -27,6 +27,14 @@ class UserController {
     ctx.response.set("content-type", avatarInfo.mimetype); //如果不设置这个头像会被直接下载下来
     ctx.body = fs.createReadStream(`${AVATAR_PATH}/${avatarInfo.filename}`);
   }
+
+  async getUserInfo(ctx, next) {
+    const { userId } = ctx.params;
+
+    const [userInfo] = await service.getUserById(userId);
+
+    ctx.body = userInfo;
+  }
 }
 
 module.exports = new UserController();
