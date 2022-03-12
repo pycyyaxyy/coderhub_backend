@@ -59,7 +59,7 @@ class MomentService {
          (SELECT JSON_ARRAYAGG(CONCAT('${APP_HOST}:${APP_PORT}/moment/images/', file.filename)) 
          FROM file WHERE m.id = file.moment_id) images
          FROM moment m
-     LEFT JOIN user u ON m.user_id = u.id
+     LEFT JOIN user u ON m.user_id = u.id ORDER BY m.id DESC
          LIMIT ?, ?;`;
 
     const [result] = await connection.execute(statement, [offset, size]);
@@ -110,7 +110,8 @@ class MomentService {
       LEFT JOIN moment_label ml ON m.id = ml.moment_id
       LEFT JOIN label l ON ml.label_id = l.id
       WHERE m.user_id = ?
-      GROUP BY m.id;
+      GROUP BY m.id
+      ORDER BY m.id DESC;
     `;
     const result = await connection.execute(statement, [userId]);
     // console.log(result); //其实是个二维数组 数组的第一个元素是保存结果的（也是数组），第二个元素是保存字段的数组
